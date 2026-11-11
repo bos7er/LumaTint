@@ -16,6 +16,13 @@
 
 ---
 
+## ☕ Support LumaTint
+
+If you like LumaTint, consider supporting its development!
+
+[![Buy Me a Coffee](https://img.shields.io/badge/☕_Buy_Me_a_Coffee-Donate_via_PayPal-blue?style=for-the-badge)](https://www.paypal.me/bos7er)
+
+
 ## Features
 
 - **Five presets:** Neutral, Warm, Cool, Night, and Soft.
