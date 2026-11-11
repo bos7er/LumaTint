@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="LumaTint is a free, open-source Windows app for adjusting display color temperature, brightness, gamma and RGB balance." />
+  <title>LumaTint — Your screen, your atmosphere.</title>
+  <style>
+    :root { --bg: #0b1020; --panel: #161d31; --text: #f4f5ff; --muted: #a1afcb; --accent: #9487ff; --border: #2a3550; }
+    *, *:before, *:after {box-sizing: border-box}
+    html {scroll-behavior:smooth}
+    body {margin:0;background:radial-gradient(ellipse 60% 38% at 74% 6%,#29224c 0%,transparent 85%),var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);line-height:1.55}
+    a {color:inherit;text-decoration:none}
+    .shell {max-width:1150px;margin:0 auto;padding:0 26px}
+    nav {height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}
+    .brand {font-size:22px;font-weight:800;letter-spacing:-1px;display:flex;align-items:center;gap:13px}
+    .brand b {display:grid;place-items:center;border-radius:12px;background:linear-gradient(140deg,#7d78ff,#d779ef);width:36px;height:36px;font-size:23px}
+    .nav-right {display:flex;gap:24px;align-items:center;color:#d7def4;font-size:14px}
+    .nav-right a:hover {color:white}
+    .badge {border:1px solid #60569d;display:inline-flex;border-radius:99px;color:#bfb6ff;padding:7px 15px;background:#7771ff17;font-weight:700;font-size:12px;letter-spacing:1.4px}
+    .hero {display:grid;grid-template-columns:1fr 1fr;gap:65px;padding:110px 0 120px;align-items:center}
+    h1 {font-size:clamp(46px,5.9vw,77px);line-height:1.04;letter-spacing:-4px;margin:24px 0}
+    h1 em {font-style:normal;color:#a39afe}
+    .lead {font-size:18px;max-width:520px;color:var(--muted);line-height:1.8;margin:0 0 36px}
+    .buttons {display:flex;gap:13px;flex-wrap:wrap}
+    .btn {border-radius:13px;padding:16px 22px;font-weight:750;display:inline-block;font-size:14px;transition:transform .2s,background .2s}
+    .btn:hover {transform:translateY(-3px)}
+    .btn-primary {background:#8b7bff;color:white;box-shadow:0 15px 50px #6557ea40}
+    .btn-secondary {border:1px solid #4b5571;background:#ffffff08}
+    .small {margin-top:22px;font-size:13px;color:#7e8da7}
+    .app {background:#131a2c;border:1px solid #41446e;border-radius:24px;overflow:hidden;box-shadow:0 30px 100px #040510c7;transform:rotate(-1.7deg);position:relative}
+    .app:after {content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px #ffffff0b;border-radius:24px;pointer-events:none}
+    .top {padding:17px 23px;border-bottom:1px solid #313954;display:flex;gap:7px;align-items:center}
+    .dot {width:9px;height:9px;background:#424c68;border-radius:50%}
+    .top span:last-child {margin-left:auto;color:#8f9ab1;font-size:11px}
+    .screen {padding:27px}
+    .screen-title {font-size:27px;font-weight:800;margin:0 0 4px}
+    .screen-sub {color:#95a4bf;font-size:13px;margin-bottom:20px}
+    .mock-surface {padding:22px;border:1px solid #39425e;background:#202944;border-radius:17px;margin-bottom:17px}
+    .mock-canvas {height:116px;border-radius:12px;background:linear-gradient(120deg,#ffa867,#ffc5a3 35%,#c5d0fa 77%,#849dff);box-shadow:0 10px 35px #0509174c}
+    .grid {display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .slider {font-size:12px;color:#c7d0ee}
+    .slider .line {margin-top:15px;height:7px;background:#333e5b;border-radius:20px;position:relative}
+    .slider .line:before {content:"";height:7px;width:var(--w);background:#9186ff;position:absolute;border-radius:20px}
+    .slider .line:after {content:"";height:16px;width:16px;border-radius:50%;background:#eee7ff;position:absolute;top:-4px;left:calc(var(--w) - 8px)}
+    .section-title {font-size:36px;letter-spacing:-1.4px;margin:15px 0}
+    .section-label {color:#b9b3ff;letter-spacing:2px;font-size:12px;font-weight:700}
+    section.features {padding:10px 0 105px}
+    .cards {display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+    .card {padding:30px;border-radius:19px;background:#151c2d;border:1px solid #303a54}
+    .card .icon {font-size:29px;margin-bottom:23px}
+    .card h3 {margin:0 0 12px;font-size:19px}
+    .card p {margin:0;color:#a2afc9;line-height:1.8;font-size:14px}
+    .notice {border-radius:20px;background:linear-gradient(120deg,#191e42,#1a2036);border:1px solid #49416d;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:85px}
+    .notice h2 {margin:0 0 8px;font-size:27px}
+    .notice p {max-width:600px;color:#a6b2cb;margin:0}
+    footer {border-top:1px solid #2a3350;display:flex;justify-content:space-between;gap:20px;padding:34px 0 60px;color:#8794ae;font-size:13px}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;gap:50px;padding:74px 0}.cards{grid-template-columns:1fr 1fr}.notice{flex-direction:column;align-items:start}}
+    @media(max-width:540px){.shell{padding:0 18px}.nav-right{gap:10px}.hero{padding:65px 0}h1{letter-spacing:-2px}.cards{grid-template-columns:1fr}.grid{gap:10px}.notice{padding:24px}footer{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="#home"><b>◈</b> LumaTint</a>
+      <div class="nav-right"><a href="#features">Features</a><a href="https://github.com/bos7er/LumaTint">GitHub ↗</a></div>
+    </nav>
+    <main id="home" class="hero">
+      <div>
+        <div class="badge">FREE · OPEN SOURCE · WINDOWS</div>
+        <h1>Make your screen <em>feel right.</em></h1>
+        <p class="lead">Tune your display for late nights, work sessions, and everything in between. Five presets, precise color controls, and optional automatic startup — in one simple Windows app.</p>
+        <div class="buttons"><a class="btn btn-primary" href="https://github.com/bos7er/LumaTint/releases/latest">↓ Download for Windows</a><a class="btn btn-secondary" href="https://github.com/bos7er/LumaTint">Explore source ↗</a></div>
+        <div class="small">Windows 10 & 11 · No account · No advertisements</div>
+      </div>
+      <div class="app" aria-label="Illustrative LumaTint interface preview">
+        <div class="top"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>LumaTint / preview illustration</span></div>
+        <div class="screen">
+          <p class="screen-title">Find your balance</p>
+          <div class="screen-sub">Fine-tune colors for your everyday setup.</div>
+          <div class="mock-surface"><div class="mock-canvas"></div></div>
+          <div class="grid">
+            <div class="mock-surface slider">Temperature · 5100 K<div class="line" style="--w:41%"></div></div>
+            <div class="mock-surface slider">Brightness · 95%<div class="line" style="--w:66%"></div></div>
+            <div class="mock-surface slider">Gamma · 1.00<div class="line" style="--w:50%"></div></div>
+            <div class="mock-surface slider">Blue balance · 97%<div class="line" style="--w:43%"></div></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <section class="features" id="features">
+      <div class="section-label">CONTROL WITHOUT COMPLEXITY</div>
+      <h2 class="section-title">The essentials, done well.</h2>
+      <div class="cards">
+        <div class="card"><div class="icon">🎨</div><h3>Five color presets</h3><p>Switch between Neutral, Warm, Cool, Night, and Soft whenever your lighting or mood changes.</p></div>
+        <div class="card"><div class="icon">🎚️</div><h3>Fine-tune every detail</h3><p>Change temperature, software brightness, gamma, and individual red, green, and blue channels.</p></div>
+        <div class="card"><div class="icon">⚡</div><h3>Start with Windows</h3><p>Enable startup in one click. The app opens minimized in the notification area when you sign in.</p></div>
+        <div class="card"><div class="icon">🛡️</div><h3>Easy to restore</h3><p>Disable adjustments or quit and LumaTint attempts to restore your original display gamma settings.</p></div>
+        <div class="card"><div class="icon">🔒</div><h3>Private by design</h3><p>No account, telemetry, subscriptions, ads, or uploads. Your settings stay on your PC.</p></div>
+        <div class="card"><div class="icon">📦</div><h3>Portable Windows EXE</h3><p>Download the executable from GitHub Releases. No Python installation required.</p></div>
+      </div>
+    </section>
+    <aside class="notice"><div><h2>Your display, your choice.</h2><p>Compatibility depends on your graphics driver. Windows HDR, Night light, and color calibration tools can override gamma adjustments. v1.0 changes the primary display only.</p></div><a class="btn btn-primary" href="https://github.com/bos7er/LumaTint/releases/latest">Get LumaTint →</a></aside>
+    <footer><span>© <span id="year">2026</span> LumaTint Contributors · MIT License</span><span>Made for Windows · Open-source project · Not affiliated with Microsoft</span></footer>
+  </div>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body>
+</html>
