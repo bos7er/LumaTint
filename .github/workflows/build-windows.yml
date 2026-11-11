@@ -1,0 +1,37 @@
+name: Build LumaTint EXE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-build.txt
+
+      - name: Build LumaTint.exe
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name LumaTint --icon assets/lumatint.ico --add-data "assets;assets" --collect-all customtkinter main.py
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: LumaTint-Windows-EXE
+          path: dist/LumaTint.exe
